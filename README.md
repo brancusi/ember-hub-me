@@ -85,7 +85,7 @@ What about calls to an API? How do I add the right headers?
 
 This is handled by adapter Mixins. Out of the box there is the Oauth Mixin.
 
-```
+```js
 //app/adapters/contact.js
 
 import DS from 'ember-data';
@@ -110,7 +110,7 @@ So this is how we do it in Ember Hub Me.
 
 Using the __OauthAuthorizer__, the following header will be sent with all requests for any adapter mixing in the __OauthAuthorizer__.
 
-```
+```HTTP
 "Authorization": "Bearer _jwt_"
 ```
 
