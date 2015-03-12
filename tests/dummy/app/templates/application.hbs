@@ -1,3 +1,11 @@
 <h2 id="title">Welcome to Ember.js</h2>
 
+{{#if hub.isAuthenticated}}
+  <a {{action 'logout'}} href=''>Logout</a>
+{{else}}
+  <a {{action 'login'}} href=''>Login</a>
+{{/if}}
+
+{{#link-to 'protected'}}Protected{{/link-to}}
+
 {{outlet}}

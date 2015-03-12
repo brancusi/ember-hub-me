@@ -1,6 +1,7 @@
 /* jshint node: true */
 
 module.exports = function(environment) {
+  
   var ENV = {
     modulePrefix: 'dummy',
     environment: environment,
@@ -16,7 +17,16 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    contentSecurityPolicy: {
+      'font-src': "'self' data: cdn.auth0.com",
+      'style-src': "'self' 'unsafe-inline'",
+      'script-src': "'self' 'unsafe-eval' *.auth0.com",
+      'img-src': '*.gravatar.com *.wp.com',
+      'connect-src': "'self' *.auth0.com"
     }
+
   };
 
   if (environment === 'development') {
@@ -25,6 +35,12 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+
+    ENV['hubme'] = {
+      clientID: "auth0_client_id",
+      domain: "auth0_domain"
+    }
+
   }
 
   if (environment === 'test') {
