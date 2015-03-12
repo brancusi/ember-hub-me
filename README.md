@@ -54,7 +54,7 @@ Ember Hub Me currently uses ```Auth0 Lock``` in popup mode. For this reason ther
 Once the ```application_route_mixin``` is added to your app route, you will be able to call the following actions:
 
 ```html
-//app/templates/application.hbs
+<!-- app/templates/application.hbs -->
 <a {{action 'login'}} href=''>Login</a>
 <a {{action 'logout'}} href=''>Logout</a>
 <a {{action 'register'}} href=''>Register</a>
