@@ -104,7 +104,7 @@ The Auth0 reccomended approach to managing authorization is as follows.
 3. The client safely stores this jwt
 4. With each request to a remote server, we send the jwt along as a header
 5. The server validates the jwt using the client secret
-6. If all is well in the jwt world, it does all needed authorization logic and sends back the requested or data or a 401 status
+6. If all is well in the jwt world, it does all needed authorization logic and sends back the requested data or a 401 status
 
 So this is how we do it in Ember Hub Me. 
 
@@ -116,7 +116,7 @@ Using the __OauthAuthorizer__, the following header will be sent with all reques
 
 By relying on the adapter to manage headers, we can have very fine grained control of how we authorize or default authorization using the mixin with an application adapater as follows:
 
-```
+```js
 //app/adapters/application.js
 
 import DS from 'ember-data';
@@ -130,7 +130,7 @@ export default DS.RESTAdapter.extend(OauthAuthorizer, {
 
 This will send the Authorization header with all requests.
 
-_Remember, Auth0 base64 encoded the client secret. you will need to urlsafe base64 decode when validating the jwt on the server or in the client_
+_Remember, Auth0 base64 encodes the client secret. you will need to urlsafe base64 decode when validating the jwt on the server or in the client_
 
 ### Roadmap
 
