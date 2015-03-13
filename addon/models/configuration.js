@@ -22,7 +22,7 @@ export default Ember.Object.extend({
    * The Auth0 account domain
    * @return {String}
    */
-  domaindomain: function(){
+  domain: function(){
     return this.get('env.hubme.domain');
   }.property('env.hubme.domain'),
   
