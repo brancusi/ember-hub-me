@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/brancusi/ember-hub-me.svg?branch=master)](https://travis-ci.org/brancusi/ember-hub-me)
+
 # Ember Hub Me
 
 Ember Hub Me aims to quickly integrate with multiple identity providers using [Auth0](https://auth0.com/).
