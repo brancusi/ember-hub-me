@@ -13,25 +13,6 @@ Ember Hub Me aims to quickly integrate with multiple identity providers using [A
 npm install --save-dev ember-hub-me
 ```
 
-### Configuration
-
-There are several configuration options.
-
-1. (REQUIRED) - _clientID_ - Grab from your Auth0 Dashboard
-2. (REQUIRED) - _domain_ - Grab from your Auth0 Dashboard
-3. (OPTIONAL) - _routeAfterAuthentication_ - The route to transition to after authentications. Defaults to ```index```
-4. (OPTIONAL) - _requestRefreshToken_ - Should we request a refresh token. If yes, this will keep the user logged in until they manually logout, or the token is revoked. Defaults to ```false```
-
-```js
-//environment.js
-ENV['hubme'] = {
-  clientID: "auth0_client_id",
-  domain: "auth0_domain",
-  routeAfterAuthentication: "dashboard",
-  requestRefreshToken: true
-}
-```
-
 ### Setup your project
 
 ## Routes
@@ -66,7 +47,10 @@ Once the ```application_route_mixin``` is added to your app route, you will be a
 
 ## Authorization
 
-Now get to the point! Give me protected routes!
+Hubme can handle client side route authentication along with sending the correct header info for data sources.
+
+
+### Client side route authentication
 
 This is handled using a mixin as follows:
 
@@ -81,21 +65,28 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
 This will force the user to login if not already authenticated.
 
+### Sending proper request to data sources - XHR Decorating
+
 What about calls to an API? How do I add the right headers?
 
-This is handled by adapter Mixins. Out of the box there is the Oauth Mixin.
 
-```js
-//app/adapters/contact.js
+This is handled by using __authorizers___. Out of the box there is the __OauthAuthorizer__.
 
-import DS from 'ember-data';
+1. _Oauth_ - Once authenticated with Auth0, this authorizer will send the following header with all requests matching the hostname.
 
-import OauthAuthorizer from 'ember-hub-me/authorizers/oauth'
-
-export default DS.RESTAdapter.extend(OauthAuthorizer, {
-  host: 'http://localhost:4567'
-});
 ```
+Authorization: "Bearer _auth0-jwt-token_"
+```
+
+If the user is not authenticated, no adjust to a request will be made.
+
+
+
+
+
+
+
+
 
 The Auth0 reccomended approach to managing authorization is as follows.
 
@@ -132,15 +123,44 @@ This will send the Authorization header with all requests.
 
 _Remember, Auth0 base64 encodes the client secret. you will need to urlsafe base64 decode when validating the jwt on the server or in the client_
 
+### Configuration
+
+There are several configuration options.
+
+1. (REQUIRED) - _clientID_ - Grab from your Auth0 Dashboard
+2. (REQUIRED) - _domain_ - Grab from your Auth0 Dashboard
+3. (OPTIONAL) - _rules_ - Array of rule objects. - {host:localhost, authrorizer:’oauth’}
+  1. (REQUIRED) - _host_ - Hostname to pattern match against, must include protocol: i.e. http://localhost. Port defaults to 80, to set port, simply add to host name: i.e. http://localhost:4567.
+  2. (OPTIONAL) - _authorizer_ - *Default* is _oauth_. The name of the authorizer to run when any call is made with the corresponding hostname.
+  3. (OPTIONAL) - _promptLogin_ - *Default* is _true_. If the user is not authenticated for this profile, prompt them to sign in if the authorizer requests missing credentials.
+3. (OPTIONAL) - _routeAfterAuthentication_ - The route to transition to after authentications. Defaults to ```index```
+4. (OPTIONAL) - _requestRefreshToken_ - Should we request a refresh token. If yes, this will keep the user logged in until they manually logout, or the token is revoked. Defaults to ```false```
+
+```js
+//environment.js
+ENV['hubme'] = {
+  clientID: "auth0-client-id",
+  domain: "auth0-domain",
+  routeAfterAuthentication: "dashboard",
+  requestRefreshToken: true,
+  rules:[
+        {host:'http://localhost:4567', authorizer:'oauth', promptLogin:false},
+        {host:'https://api.dopeness.com', authorizer:'dope-auth', promptLogin:false}
+      ]
+
+}
+```
+
 ### Roadmap
 
-The goal of this addon is to allow the client to simply setup adapters and have all the authentication and authorization for that provider to happen in the background. Auth0 streamlines the authentication part, so the task for Ember Hub Me will be to manage those profiles and plug in the user workflows.
+The goal of this addon is to allow the client to simply setup mappings and have all the authentication and authorization for that provider to happen through Auth0. Auth0 streamlines the authentication part, so the task for Ember Hub Me will be to manage those profiles and plug in the user workflows.
 
-1. Manage state across multiple windows and tabs
-2. Allow for linking of providers, fb, github, etc. into the main identity
-3. Allow for an adapter to trigger authentication if a 401 is returned
-
+1. Manage state across multiple windows and tabs.
+2. Allow for linking of providers, fb, github, etc. into the main identity.
+3. Allow for an adapter to trigger authentication if a 401 is returned.
+4. Test helpers.
+5. Docs.
 
 ### Tests
 
-I know...
+Coverage is very low right now. There are some unit tests for the patter matching, but no end-to-end yet.

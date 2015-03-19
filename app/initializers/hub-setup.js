@@ -1,27 +1,24 @@
-import Session from 'ember-hub-me/services/session';
 import Hub from 'ember-hub-me/services/hub';
-import Configuration from 'ember-hub-me/models/configuration';
-
 import ENV from '../config/environment';
+
+// Authorizers
+import OauthAuthorizer from 'ember-hub-me/authorizers/oauth';
 
 export function initialize(container, application) {
 
-  var config = Configuration.create({env:ENV});
+  var hub = Hub.create({env:ENV, container:container});
 
-  // Register the hub-me modules
-  application.register('hub-me:configuration', config, {instantiate: false});
-  application.register('hub-me:session', Session);
-  application.register('hub-me:hub', Hub);
+  // First register all built in authorizers
+  application.register('authorizer:oauth', OauthAuthorizer);
 
-  // Inject the hell out of them
-  application.inject('hub-me:session', 'config', 'hub-me:configuration');
-  application.inject('hub-me:hub', 'config', 'hub-me:configuration');
-  application.inject('hub-me:hub', 'session', 'hub-me:session');
+  application.register('service:hub', hub, {instantiate: false});
 
-  application.inject('route', 'hub', 'hub-me:hub');
-  application.inject('controller', 'hub', 'hub-me:hub');
-  application.inject('adapter', 'hub', 'hub-me:hub');
+  application.inject('route', 'hub', 'service:hub');
+  application.inject('controller', 'hub', 'service:hub');
+  application.inject('adapter', 'hub', 'service:hub');
 
+  // Starts up the hub
+  hub.bootstrap();
 }
 
 export default {

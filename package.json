@@ -1,6 +1,6 @@
 {
   "name": "ember-hub-me",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Authenticate with Auth0 - Lock.js",
   "directories": {
     "doc": "doc",

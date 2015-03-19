@@ -20,5 +20,6 @@ var app = new EmberAddon();
 
 app.import(app.bowerDirectory + '/auth0-lock/build/auth0-lock.min.js');
 app.import(app.bowerDirectory + '/jwt-decode/build/jwt-decode.min.js');
+app.import(app.bowerDirectory + '/uri.js/src/URI.min.js');
 
 module.exports = app.toTree();

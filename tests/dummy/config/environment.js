@@ -1,7 +1,7 @@
 /* jshint node: true */
 
 module.exports = function(environment) {
-  
+
   var ENV = {
     modulePrefix: 'dummy',
     environment: environment,
@@ -22,9 +22,9 @@ module.exports = function(environment) {
     contentSecurityPolicy: {
       'font-src': "'self' data: cdn.auth0.com",
       'style-src': "'self' 'unsafe-inline'",
-      'script-src': "'self' 'unsafe-eval' *.auth0.com",
+      'script-src': "'self' http://localhost:4567 'unsafe-eval' *.auth0.com",
       'img-src': '*.gravatar.com *.wp.com',
-      'connect-src': "'self' *.auth0.com"
+      'connect-src': "'self' http://localhost:4567 *.auth0.com"
     }
 
   };
@@ -37,8 +37,11 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
     ENV['hubme'] = {
-      clientID: "auth0_client_id",
-      domain: "auth0_domain"
+      clientID: "client-id",
+      domain: "auth0-domain",
+      rules:[
+        {host:'http://localhost:3000'}
+      ]
     }
 
   }
@@ -53,6 +56,15 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+
+    ENV['hubme'] = {
+      clientID: "123client_id",
+      domain: "testing.auth0.com",
+      defaultAuthorizer: "oauth",
+      rules:[
+        {host:'localhost'}
+      ]
+    }
   }
 
   if (environment === 'production') {

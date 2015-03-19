@@ -3,8 +3,11 @@ module.exports = {
   },
 
   afterInstall: function() {
-    return this.addBowerPackageToProject('auth0-lock', '~7.1.7')
-    .then(this.addBowerPackageToProject('jwt-decode', '~1.0.2'))
-    
+    return this.addBowerPackagesToProject([
+      { name: 'auth0-lock',     target: '~7.1.7'  },
+      { name: 'jwt-decode',     target: '~1.0.2'  },
+      { name: 'uri.js',         target: '~1.14.2' }
+    ]);
+
   }
 };

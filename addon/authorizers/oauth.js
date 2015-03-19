@@ -1,13 +1,20 @@
 import Ember from 'ember';
 
-export default Ember.Mixin.create({
 
-  headers: function(){
-    var token = "Bearer %@".fmt(this.get('hub.session.jwt')); 
-    return {
-      "Authorization": token
-    };
-  }.property()
+export default Ember.Object.extend({
 
+  hub: Ember.inject.service('hub'),
+
+  ajaxPrefilter: function(options, originalOptions, jqXHR){
+    console.log('FIRED!!!', originalOptions, jqXHR);
+    var token = "Bearer %@".fmt(this.get('hub.session.jwt'));
+
+    if(Ember.isBlank(options.headers)){
+      options.headers = {};
+    }
+
+    options.headers.Authorization = token;
+
+  }
 
 });

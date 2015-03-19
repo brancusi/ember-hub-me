@@ -1,5 +1,5 @@
 import Ember from 'ember';
-
+         
 //=======================
 // Constants
 //=======================
@@ -201,8 +201,6 @@ export default Ember.Object.extend(Ember.Evented, {
     var json = localStorage.getItem(storageKey);
     if(!Ember.isBlank(json)){
       this.set(memoryKey, JSON.parse(json));
-    }else{
-      console.log('Warning, nothing to restore, that element is null', memoryKey);
     }
   },
 
@@ -268,8 +266,6 @@ export default Ember.Object.extend(Ember.Evented, {
   },
 
   _processSessionExpired: function(){
-    console.log('Expired!');
-    // this._clearItem('_jwt', HM_JWT);
     this.destroySession();
   },
 
