@@ -5,8 +5,7 @@ export default Ember.Object.extend({
 
   hub: Ember.inject.service('hub'),
 
-  ajaxPrefilter: function(options, originalOptions, jqXHR){
-    console.log('FIRED!!!', originalOptions, jqXHR);
+  ajaxPrefilter: function(options /* originalOptions, jqXHR */){
     var token = "Bearer %@".fmt(this.get('hub.session.jwt'));
 
     if(Ember.isBlank(options.headers)){

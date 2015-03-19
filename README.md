@@ -127,14 +127,14 @@ _Remember, Auth0 base64 encodes the client secret. you will need to urlsafe base
 
 There are several configuration options.
 
-1. (REQUIRED) - _clientID_ - Grab from your Auth0 Dashboard
-2. (REQUIRED) - _domain_ - Grab from your Auth0 Dashboard
-3. (OPTIONAL) - _rules_ - Array of rule objects. - {host:localhost, authrorizer:’oauth’}
-  1. (REQUIRED) - _host_ - Hostname to pattern match against, must include protocol: i.e. http://localhost. Port defaults to 80, to set port, simply add to host name: i.e. http://localhost:4567.
-  2. (OPTIONAL) - _authorizer_ - *Default* is _oauth_. The name of the authorizer to run when any call is made with the corresponding hostname.
-  3. (OPTIONAL) - _promptLogin_ - *Default* is _true_. If the user is not authenticated for this profile, prompt them to sign in if the authorizer requests missing credentials.
-3. (OPTIONAL) - _routeAfterAuthentication_ - The route to transition to after authentications. Defaults to ```index```
-4. (OPTIONAL) - _requestRefreshToken_ - Should we request a refresh token. If yes, this will keep the user logged in until they manually logout, or the token is revoked. Defaults to ```false```
+1. (REQUIRED) - ```clientID``` - Grab from your Auth0 Dashboard
+2. (REQUIRED) - ```domain``` - Grab from your Auth0 Dashboard
+3. (OPTIONAL) - ```rules``` - Array of rule objects. - {host:localhost, authrorizer:’oauth’}
+  1. (REQUIRED) - ```host``` - Hostname to pattern match against, must include protocol: i.e. ```http://localhost```. Port defaults to 80, to set port, simply add to host name: i.e. ```http://localhost:4567```.
+  2. (OPTIONAL) - ```authorizer``` - ```Default``` is *oauth*. The name of the authorizer to run when any call is made with the corresponding hostname.
+  3. (OPTIONAL) - ```promptLogin``` - ```Default``` is *true*. If the user is not authenticated for this profile, prompt them to sign in if the authorizer requests missing credentials.
+3. (OPTIONAL) - ```routeAfterAuthentication``` - The route to transition to after authentications. Defaults to ```index```
+4. (OPTIONAL) - ```requestRefreshToken``` - Should we request a refresh token. If yes, this will keep the user logged in until they manually logout, or the token is revoked. Defaults to ```false```
 
 ```js
 //environment.js
