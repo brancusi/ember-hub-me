@@ -1,6 +1,5 @@
 import Ember from 'ember';
 
-
 export default Ember.Object.extend({
 
   hub: Ember.inject.service('hub'),

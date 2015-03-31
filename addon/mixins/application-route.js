@@ -19,21 +19,21 @@ export default Ember.Mixin.create({
     var _this = this;
 
     this.get('hub.session').on('session_created', function(){
-      _this._sessionCreatedHandler();
+      _this.sessionCreatedHandler();
     });
+
   },
 
   //=======================
-  // Handler Methods
+  // Hooks - Override
   //=======================
-  _sessionCreatedHandler: function(){
+  sessionCreatedHandler: function(){
     var stashedTransition = this.get('hub').popStashedTransition();
     if(Ember.isEmpty(stashedTransition)){
       this.transitionTo(this.get('hub.transitionAfterLogin'));
     }else{
       stashedTransition.retry();
     }
-    
   },
 
   //=======================

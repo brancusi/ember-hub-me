@@ -62,7 +62,7 @@ module.exports = function(environment) {
       domain: "testing.auth0.com",
       defaultAuthorizer: "oauth",
       rules:[
-        {host:'localhost'}
+        {host:'http://localhost:3000'}
       ]
     }
   }

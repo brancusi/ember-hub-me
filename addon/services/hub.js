@@ -3,7 +3,7 @@ import Configuration from 'ember-hub-me/models/configuration';
 import AuthorizationRule from 'ember-hub-me/models/authorization-rule';
 import Ember from 'ember';
 
-var Hub = Ember.Service.extend({
+var Hub = Ember.Service.extend(Ember.Evented, {
 
   //=======================
   // Computed Properties
@@ -157,11 +157,8 @@ var Hub = Ember.Service.extend({
   },
 
   _handleLockReponse: function(err, profile, jwt, accessToken, state, refreshToken){
-    if(err){
-      console.log(err);
-    }else{
-      this.get('session').createSession(profile, jwt, accessToken, refreshToken);
-    }
+    Ember.assert('There was an error logging in', !err);
+    this.get('session').createSession(profile, jwt, accessToken, refreshToken);
   },
 
   _sessionDestroyedHandler: function() {
@@ -175,8 +172,8 @@ var Hub = Ember.Service.extend({
 //=======================
 // Class Properties
 //=======================
-// Hub.reopenClass({
-  
-// });
+Hub.reopenClass({
+  //
+});
 
 export default Hub;

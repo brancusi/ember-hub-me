@@ -92,6 +92,14 @@ export default Ember.Object.extend(Ember.Evented, {
     return this.get('_profile');
   }.property('_profile').readOnly(),
 
+  /**
+   * The current user of the session
+   * @return {UserModel} The current user of the model
+   */
+  user: function(){
+    return this.get('_user');
+  }.property('_user').readOnly(),
+
   //=======================
   // Public Methods
   //=======================
@@ -123,6 +131,25 @@ export default Ember.Object.extend(Ember.Evented, {
     this._restoreItem('_accessToken', HM_ACCESS_TOKEN);
     this._restoreJWT();
     this._restoreItem('_profile', HM_PROFILE);
+
+    if(this.get('isAuthenticated')){
+      this._notifySessionCreated();
+    }
+  },
+
+  /**
+   * Set the user of the current session
+   * @param {UserModel} user The user to store with this session
+   */
+  setUser: function(user){
+    this.set('_user', user);
+  },
+
+  /**
+   * Clear the current user from the session
+   */
+  clearUser: function(){
+    this.set('_user', null);
   },
 
   /**
@@ -131,6 +158,7 @@ export default Ember.Object.extend(Ember.Evented, {
   destroySession: function(){
     var _this = this;
 
+    this.clearUser();
     this._clearJobQueue();
 
     if(this.get('hasRefreshToken')){
