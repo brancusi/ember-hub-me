@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+var read = Ember.computed.readOnly;
+
 export default Ember.Object.extend({
 
   init: function(){
@@ -13,7 +15,7 @@ export default Ember.Object.extend({
    * Is the rule valid
    * @return {Boolean} The rule requires an authenticator and host
    */
-  isValid: function(){
+  isValid: Ember.computed('host', 'authorizer', function() {
     var valid = true;
 
     if(!Ember.isBlank(this.get('authorizer'))){
@@ -28,23 +30,12 @@ export default Ember.Object.extend({
 
     return valid;
 
-  }.property('host', 'authorizer'),
+  }),
 
-  protocol: function(){
-    return this.get('_protcol');
-  }.property('_protcol'),
-
-  host: function(){
-    return this.get('_host');
-  }.property('_host'),
-
-  port: function(){
-    return this.get('_port');
-  }.property('_port'),
-
-  forceLogin: function(){
-    return this.get('options.forceLogin');
-  }.property('options.forceLogin'),
+  protocol: read('_protcol'),
+  host: read('_host'),
+  port: read('_port'),
+  forceLogin: read('options.forceLogin'),
 
   test: function(url){
     var uri = URI.parse(url);

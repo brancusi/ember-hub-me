@@ -14,6 +14,8 @@ var SESSION_CREATED_EVENT = 'session_created';
 
 var SECOND = 1000;
 
+var read = Ember.computed.readOnly;
+
 export default Ember.Object.extend(Ember.Evented, {
 
   //=======================
@@ -24,81 +26,67 @@ export default Ember.Object.extend(Ember.Evented, {
    * Is the current session authenticated.
    * @return {Boolean}
    */
-  isAuthenticated: function(){
+  isAuthenticated:Ember.computed('jwt', function(){
     return !Ember.isBlank(this.get('jwt'));
-  }.property('jwt').readOnly(),
+  }),
 
   /**
    * The refresh token used to refresh the temporary access key.
    * @return {String}
    */
-  refreshToken: function(){
-    return this.get('_refreshToken');
-  }.property('_refreshToken').readOnly(),
+  refreshToken: read('_refreshToken'),
 
   /**
    * Is there currently a refresh token
    * @return {Boolean}
    */
-  hasRefreshToken: function(){
-    return !Ember.isBlank(this.get('refreshToken'));
-  }.property('refreshToken').readOnly(),
+  hasRefreshToken: read('refreshToken'),
 
   /**
    * The access token
    * @return {String}
    */
-  accessToken: function(){
-    return this.get('_accessToken');
-  }.property('_accessToken').readOnly(),
+  accessToken: read('_accessToken'),
 
   /**
    * Is there currently a refresh token
    * @return {Boolean}
    */
-  hasAccessToken: function(){
+  hasAccessToken: Ember.computed('accessToken', function(){
     return !Ember.isBlank(this.get('accessToken'));
-  }.property('accessToken').readOnly(),
+  }),
 
   /**
    * The current user Auth0 ID
    * @return {String}
    */
-  userID: function(){
-    return this.get('_profile.user_id');
-  }.property('_profile.user_id').readOnly(),
+  userID: read('_profile.user_id'),
 
   /**
    * The current session JWT.
    * @return {Base64 url encoded JWT}
    */
-  jwt: function(){
-    return this.get('_jwt');
-  }.property('_jwt').readOnly(),
+  jwt: read('_jwt'),
 
   /**
    * Is the currently a jwt in store
    * @return {Boolean}
    */
-  hasJWT: function(){
+  hasJWT: Ember.computed('jwt', function(){
     return !Ember.isBlank(this.get('jwt'));
-  }.property('jwt').readOnly(),
+  }),
 
   /**
    * The current auth0 profile
    * @return {Object}
    */
-  profile: function(){
-    return this.get('_profile');
-  }.property('_profile').readOnly(),
+  profile: read('_profile'),
 
   /**
    * The current user of the session
    * @return {UserModel} The current user of the model
    */
-  user: function(){
-    return this.get('_user');
-  }.property('_user').readOnly(),
+  user: read('_user'),
 
   //=======================
   // Public Methods

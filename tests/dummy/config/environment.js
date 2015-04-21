@@ -37,8 +37,8 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
     ENV['hubme'] = {
-      clientID: "client-id",
-      domain: "auth0-domain",
+      clientID: "123client_id",
+      domain: "mydev.auth0.com",
       rules:[
         {host:'http://localhost:3000'}
       ]

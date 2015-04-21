@@ -72,7 +72,8 @@ var Hub = Ember.Service.extend(Ember.Evented, {
   createAuthorizationRule: function(options){
     var authorizerName = Ember.isBlank(options.authorizer) ? this.get('config.defaultAuthorizer') : options.authorizer;
     var isNamespaced = new RegExp(/:/).test(authorizerName);
-    var namespaced = isNamespaced ? authorizerName : "authorizer:%@".fmt(authorizerName);
+
+    var namespaced = isNamespaced ? authorizerName : "authorizer:" + authorizerName;
     var authorizer = this.container.lookup(namespaced);
     Ember.assert('Could not find an authorizer named: ' + authorizerName, authorizer);
 
