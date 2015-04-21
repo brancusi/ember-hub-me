@@ -12,8 +12,8 @@
     "jquery": "^1.11.1",
     "loader.js": "ember-cli/loader.js#3.2.0",
     "qunit": "~1.17.1",
-    "auth0-lock": "~7.1.7",
-    "jwt-decode": "~1.0.2",
-    "uri.js": "~1.14.2"
+    "auth0-lock": "~7.4.0",
+    "jwt-decode": "~1.1.0",
+    "uri.js": "~1.15.0"
   }
 }
