@@ -29,6 +29,12 @@ export default Ember.Object.extend({
   domain: read('hubme.domain'),
 
   /**
+   * The params that get passed to the auth0 show call
+   * @return {Object}
+   */
+  showOptions: read('hubme.showOptions'),
+
+  /**
    * The list of request rules. 
    */
   rules: read('hubme.rules'),

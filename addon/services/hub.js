@@ -29,15 +29,7 @@ var Hub = Ember.Service.extend(Ember.Evented, {
    * Trigger Login using Auth0 Lock popup
    */
   login:function(){
-
-    var _this = this;
-
-    this.get('lock').show({
-      popup: true,
-      authParams: {
-        scope: _this._createScope()
-      }
-    }, this._handleLockReponse.bind(this));
+    this.get('lock').show(this.get('config.showOptions'), this._handleLockReponse.bind(this));
   },
 
   /**
@@ -135,14 +127,14 @@ var Hub = Ember.Service.extend(Ember.Evented, {
   //=======================
   // Utility Methods
   //=======================
-  _createScope: function(){
-    var scope = 'openid profile';
-    if(this.get('config.requestRefreshToken')){
-      scope = scope + " offline_access";
-    }
+  // _createScope: function(){
+  //   var scope = 'openid profile';
+  //   if(this.get('config.requestRefreshToken')){
+  //     scope = scope + " offline_access";
+  //   }
 
-    return scope;
-  },
+  //   return scope;
+  // },
 
   //=======================
   // Handler Methods
