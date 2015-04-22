@@ -46,14 +46,7 @@ var Hub = Ember.Service.extend(Ember.Evented, {
    * Trigger the Auth0 Lock register popup
    */
   register:function(){
-    var _this = this;
-
-    this.get('lock').showSignup({
-      popup: true,
-      authParams: {
-        scope: _this._createScope()
-      }
-    }, this._handleLockReponse.bind(this));
+    this.get('lock').showSignup(this.get('config.showOptions'), this._handleLockReponse.bind(this));
   },
 
   /**
@@ -123,18 +116,6 @@ var Hub = Ember.Service.extend(Ember.Evented, {
       _this.createAuthorizationRule(options);
     });
   },
-
-  //=======================
-  // Utility Methods
-  //=======================
-  // _createScope: function(){
-  //   var scope = 'openid profile';
-  //   if(this.get('config.requestRefreshToken')){
-  //     scope = scope + " offline_access";
-  //   }
-
-  //   return scope;
-  // },
 
   //=======================
   // Handler Methods
