@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/brancusi/ember-hub-me.svg?branch=master)](https://travis-ci.org/brancusi/ember-hub-me)
 
+# Warning, very much under flux. Do not use right now.
+
 # Ember Hub Me
 
 Ember Hub Me aims to quickly integrate with multiple identity providers using [Auth0](https://auth0.com/).
